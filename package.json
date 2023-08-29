@@ -1,0 +1,49 @@
+{
+  "name": "wagtail-js",
+  "version": "0.0.1",
+  "description": "Wagtail JavaScript SDK",
+  "author": "Peng Boris <peng@traleor.com>",
+  "license": "MIT",
+  "funding": "https://github.com/sponsors/antfu",
+  "homepage": "https://github.com/unocss/unocss/tree/main/packages/runtime#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/unocss/unocss"
+  },
+  "bugs": {
+    "url": "https://github.com/unocss/unocss/issues"
+  },
+  "keywords": [
+    "cms",
+    "wagtail",
+    "typescript",
+    "javascript",
+    "nodejs",
+    "django",
+    "headless",
+    "nextjs",
+    "nuxtjs"
+  ],
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "tsup --watch",
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "tsup": "^7.1.0",
+    "typescript": "^5.1.6"
+  }
+}
