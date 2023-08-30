@@ -42,7 +42,7 @@ export class FetchError extends Error {
  * }
  */
 export const fetchRequest = async (
-  method: string,
+  method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | "HEAD",
   url: RequestInfo | URL,
   data: any,
   headers?: HeadersInit,
@@ -64,7 +64,7 @@ export const fetchRequest = async (
   } catch (error) {
     console.group("FETCH_REQUEST_ERROR");
     console.log("method: ", method);
-    console.log("url: ", url)
+    console.log("url: ", url);
     console.log("data: ", data);
     console.log("headers: ", headers);
     console.log("error: ", error);

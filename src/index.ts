@@ -1,7 +1,9 @@
 /**
  * Export all from "lib" and "types"
  */
-import { fetchRequest, FetchError, fetchContent } from "@/lib";
+export * from "@/lib";
+export * from "@/types";
+import { FetchError, fetchContent } from "@/lib";
 import {
   ClientOptions,
   CMSContent,
@@ -10,8 +12,6 @@ import {
   CMSQueries,
   NotFoundContents,
 } from "@/types";
-
-export { fetchRequest, FetchError, fetchContent };
 
 /**
  * Class representing a client for fetching CMS content.
