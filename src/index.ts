@@ -108,20 +108,26 @@ export class CMSClient {
         };
       }
     } else {
-      const response = (await this.fetchContent(
-        `${contentType}/${idOrSlug}`,
-        queries,
-        headers,
-        cache
-      )) as CMSContent;
-
-      if (response.id && response.title) {
-        return response;
-      } else {
-        return {
-          message: "Page not found",
-          data: response,
-        };
+      try {
+        return (await this.fetchContent(
+          `${contentType}/${idOrSlug}`,
+          queries,
+          headers,
+          cache
+        )) as CMSContent;
+      } catch (error) {
+        if (error instanceof FetchError) {
+          return {
+            message: "Page not found",
+            data: error,
+          };
+        } else {
+          console.error("An unknown error occurred:", error);
+          return {
+            message: "An unknown error occurred:",
+            data: error,
+          };
+        }
       }
     }
   }
@@ -143,20 +149,26 @@ export class CMSClient {
     cache?: RequestCache
   ): Promise<CMSContent | NotFoundContents> {
     const contentType = "images";
-    const response = (await this.fetchContent(
-      `${contentType}/${id}`,
-      queries,
-      headers,
-      cache
-    )) as CMSContent;
-
-    if (response.id && response.title) {
-      return response;
-    } else {
-      return {
-        message: "Image not found",
-        data: response,
-      };
+    try {
+      return (await this.fetchContent(
+        `${contentType}/${id}`,
+        queries,
+        headers,
+        cache
+      )) as CMSContent;
+    } catch (error) {
+      if (error instanceof FetchError) {
+        return {
+          message: "Image not found",
+          data: error,
+        };
+      } else {
+        console.error("An unknown error occurred:", error);
+        return {
+          message: "An unknown error occurred:",
+          data: error,
+        };
+      }
     }
   }
 
@@ -177,20 +189,26 @@ export class CMSClient {
     cache?: RequestCache
   ): Promise<CMSContent | NotFoundContents> {
     const contentType = "documents";
-    const response = (await this.fetchContent(
-      `${contentType}/${id}`,
-      queries,
-      headers,
-      cache
-    )) as CMSContent;
-
-    if (response.id && response.title) {
-      return response;
-    } else {
-      return {
-        message: "Document not found",
-        data: response,
-      };
+    try {
+      return (await this.fetchContent(
+        `${contentType}/${id}`,
+        queries,
+        headers,
+        cache
+      )) as CMSContent;
+    } catch (error) {
+      if (error instanceof FetchError) {
+        return {
+          message: "Document not found",
+          data: error,
+        };
+      } else {
+        console.error("An unknown error occurred:", error);
+        return {
+          message: "An unknown error occurred:",
+          data: error,
+        };
+      }
     }
   }
 

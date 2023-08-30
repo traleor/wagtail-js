@@ -1,3 +1,5 @@
+import { FetchError } from "..";
+
 export interface ClientOptions {
   baseURL: string;
   apiPath: string;
@@ -60,5 +62,5 @@ export interface CMSContents {
 
 export interface NotFoundContents {
   message: string;
-  data: CMSContent| CMSContents;
+  data: CMSContent | CMSContents | FetchError | unknown;
 }
