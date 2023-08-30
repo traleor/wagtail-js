@@ -60,5 +60,5 @@ export interface CMSContents {
 
 export interface NotFoundContents {
   message: string;
-  data: CMSContents;
+  data: CMSContent| CMSContents;
 }

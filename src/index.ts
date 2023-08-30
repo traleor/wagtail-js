@@ -1,9 +1,7 @@
 /**
  * Export all from "lib" and "types"
  */
-export * from "@/lib";
-export * from "@/types";
-import { fetchContent } from "@/lib";
+import { fetchRequest, FetchError, fetchContent } from "@/lib";
 import {
   ClientOptions,
   CMSContent,
@@ -12,6 +10,8 @@ import {
   CMSQueries,
   NotFoundContents,
 } from "@/types";
+
+export { fetchRequest, FetchError, fetchContent };
 
 /**
  * Class representing a client for fetching CMS content.
@@ -25,6 +25,19 @@ export class CMSClient {
   /**
    * Creates an instance of CMSClient.
    * @param {ClientOptions} options - Options for configuring the client.
+   * @param {string} options.baseURL - The base URL of the CMS.
+   * @param {string} options.apiPath - The path to the CMS API.
+   * @param {HeadersInit} [options.headers] - Additional headers to include in the request.
+   * @param {RequestCache} [options.cache] - The caching strategy to use for the request.
+   * @memberof CMSClient
+   * @example
+   * const client = new CMSClient({
+   *  baseURL: "https://example.com",
+   * apiPath: "/api/v2",
+   * headers: {},
+   * cache: "force-cache",
+   * });
+   *
    */
   constructor(options: ClientOptions) {
     this.baseURL = options.baseURL;
@@ -95,12 +108,21 @@ export class CMSClient {
         };
       }
     } else {
-      return (await this.fetchContent(
+      const response = (await this.fetchContent(
         `${contentType}/${idOrSlug}`,
         queries,
         headers,
         cache
       )) as CMSContent;
+
+      if (response.id && response.title) {
+        return response;
+      } else {
+        return {
+          message: "Page not found",
+          data: response,
+        };
+      }
     }
   }
 
@@ -108,44 +130,33 @@ export class CMSClient {
    * Fetches a single image based on its ID or slug, handling response and error cases.
    *
    * @async
-   * @param {number | string} idOrSlug - The ID or slug of the image to fetch.
+   * @param {number} id - The ID of the image to fetch.
    * @param {CMSQueries} [queries] - Optional queries to filter the content.
    * @param {HeadersInit} [headers] - Additional headers to include in the request.
    * @param {RequestCache} [cache] - The caching strategy to use for the request.
    * @returns {Promise<CMSContent | NotFoundContents>} A Promise that resolves with the image content or a "not found" response.
    */
   public async fetchImage(
-    idOrSlug: number | string,
+    id: number,
     queries?: CMSQueries,
     headers?: HeadersInit,
     cache?: RequestCache
   ): Promise<CMSContent | NotFoundContents> {
     const contentType = "images";
+    const response = (await this.fetchContent(
+      `${contentType}/${id}`,
+      queries,
+      headers,
+      cache
+    )) as CMSContent;
 
-    if (typeof idOrSlug === "string") {
-      const response = await this.fetchContent(
-        contentType,
-        { slug: idOrSlug, ...queries },
-        headers,
-        cache
-      );
-
-      if (response?.items && response.items.length > 0) {
-        const image: CMSContent = response.items[0];
-        return image;
-      } else {
-        return {
-          message: "Image not found",
-          data: response as CMSContents,
-        };
-      }
+    if (response.id && response.title) {
+      return response;
     } else {
-      return (await this.fetchContent(
-        `${contentType}/${idOrSlug}`,
-        queries,
-        headers,
-        cache
-      )) as CMSContent;
+      return {
+        message: "Image not found",
+        data: response,
+      };
     }
   }
 
@@ -153,44 +164,33 @@ export class CMSClient {
    * Fetches a single document based on its ID or slug, handling response and error cases.
    *
    * @async
-   * @param {number | string} idOrSlug - The ID or slug of the document to fetch.
+   * @param {number} id - The ID of the document to fetch.
    * @param {CMSQueries} [queries] - Optional queries to filter the content.
    * @param {HeadersInit} [headers] - Additional headers to include in the request.
    * @param {RequestCache} [cache] - The caching strategy to use for the request.
    * @returns {Promise<CMSContent | NotFoundContents>} A Promise that resolves with the document content or a "not found" response.
    */
   public async fetchDocument(
-    idOrSlug: number | string,
+    id: number,
     queries?: CMSQueries,
     headers?: HeadersInit,
     cache?: RequestCache
   ): Promise<CMSContent | NotFoundContents> {
     const contentType = "documents";
+    const response = (await this.fetchContent(
+      `${contentType}/${id}`,
+      queries,
+      headers,
+      cache
+    )) as CMSContent;
 
-    if (typeof idOrSlug === "string") {
-      const response = await this.fetchContent(
-        contentType,
-        { slug: idOrSlug, ...queries },
-        headers,
-        cache
-      );
-
-      if (response?.items && response.items.length > 0) {
-        const document: CMSContent = response.items[0];
-        return document;
-      } else {
-        return {
-          message: "Document not found",
-          data: response as CMSContents,
-        };
-      }
+    if (response.id && response.title) {
+      return response;
     } else {
-      return (await this.fetchContent(
-        `${contentType}/${idOrSlug}`,
-        queries,
-        headers,
-        cache
-      )) as CMSContent;
+      return {
+        message: "Document not found",
+        data: response,
+      };
     }
   }
 

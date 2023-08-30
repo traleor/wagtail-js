@@ -6,7 +6,7 @@ import { fetchRequest } from "@/lib";
  *
  * @async
  * @param {string} baseURL - The base URL of the CMS API.
- * @param {string} apiPath - The API path for fetching content (e.g., '/api/cms/v2/').
+ * @param {string} apiPath - The API path for fetching content (e.g., '/api/cms/v2').
  * @param {CMSContent} content - The type of CMS content to fetch.
  * @param {CMSQueries} [queries] - Optional queries to filter the content.
  * @param {HeadersInit} [headers] - Additional headers to include in the request.
@@ -17,7 +17,7 @@ import { fetchRequest } from "@/lib";
  * @example
  * // Example usage:
  * const baseURL = 'https://api.example.com';
- * const apiPath = '/api/cms/v2/';
+ * const apiPath = '/api/cms/v2';
  * const content = 'posts';
  * const queries = { category: 'news', limit: 10 };
  * const headers = { Authorization: 'Bearer token' };
@@ -42,8 +42,7 @@ import { fetchRequest } from "@/lib";
  */
 export const fetchContent = async (
   baseURL: string,
-  apiPath: string, //  /api/cms/v2/
-  //   also image and doc id
+  apiPath: string, //  /api/cms/v2
   content: CMSContentPath,
   queries?: CMSQueries,
   headers?: HeadersInit,
@@ -67,7 +66,7 @@ export const fetchContent = async (
         .join("&")
     : "";
 
-  const fullUrl = `${baseURL}${apiPath}${content}/?${query}`;
+  const fullUrl = `${baseURL}${apiPath}/${content}/?${query}`;
 
   return await fetchRequest("GET", fullUrl, {}, headers, cache);
 };

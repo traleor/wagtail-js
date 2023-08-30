@@ -64,6 +64,7 @@ export const fetchRequest = async (
   } catch (error) {
     console.group("FETCH_REQUEST_ERROR");
     console.log("method: ", method);
+    console.log("url: ", url)
     console.log("data: ", data);
     console.log("headers: ", headers);
     console.log("error: ", error);
