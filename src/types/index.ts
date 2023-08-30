@@ -1,4 +1,4 @@
-import { FetchError } from "..";
+import { FetchError } from "@/lib";
 
 export interface ClientOptions {
   baseURL: string;
@@ -32,16 +32,16 @@ export interface CMSPageMeta {
   slug: string;
   type: string;
   //   TODO
-  locale: "en" | "fr" | "de" | "es" | string;
+  locale: "en" | "fr" | "de" | "es" | "it" | "ja" | "ko" | "pt" | string;
   html_url: string;
-  detail_url?: string;
+  detail_url: string;
   seo_title?: string;
   search_description?: string;
 }
 
 export interface CMSMediaMeta {
   type: string;
-  detail_url?: string;
+  detail_url: string;
   tags?: string[];
   download_url?: string;
 }

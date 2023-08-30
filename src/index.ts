@@ -9,6 +9,7 @@ import {
   CMSContent,
   CMSContentPath,
   CMSContents,
+  CMSMediaMeta,
   CMSQueries,
   NotFoundContents,
 } from "@/types";
@@ -276,5 +277,20 @@ export class CMSClient {
       headers,
       cache
     )) as CMSContents;
+  }
+
+  /**
+   * Contructs the URL for a media item based on its type.
+   * @param {CMSMediaMeta} media - The media item to construct the URL for.
+   * @returns {string | undefined} The URL for the media item.
+   */
+  public getMediaSrc(media: CMSMediaMeta): string | undefined {
+    if (media.type === "wagtailimages.Image") {
+      return this.baseURL + new URL(media.detail_url).pathname;
+    } else if (media.type === "wagtaildocs.Document") {
+      return this.baseURL + media.download_url;
+    } else {
+      return undefined;
+    }
   }
 }
