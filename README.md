@@ -1,10 +1,10 @@
 # Wagtail TypeScript Client
 
-The `wagtail-js` package is designed to provide a client for fetching content from a Wagtail-based CMS using TypeScript. This client facilitates the retrieval of various types of content, such as pages, images, and documents, from the CMS.
+The [wagtail-js](https://www.npmjs.com/package/wagtail-js) package is designed to provide a client for fetching content from a Wagtail-based CMS using TypeScript. This client facilitates the retrieval of various types of content, such as pages, images, and documents, from the CMS.
 
 ## Installation
 
-You can install the `wagtail-js` package using npm, pnpm, or yarn:
+You can install the [wagtail-js](https://www.npmjs.com/package/wagtail-js) package using npm, pnpm, or yarn:
 
 ```bash
 npm install wagtail-js
