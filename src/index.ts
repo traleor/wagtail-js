@@ -24,6 +24,15 @@ export class CMSClient {
   private cache: RequestCache;
 
   /**
+   * Checks if a string ends with a '/'.
+   * @param {string} str - The string to check.
+   * @returns {boolean} True if the string ends with '/', false otherwise.
+   */
+  private endsWithSlash(str: string): boolean {
+    return str.endsWith("/");
+  }
+
+  /**
    * Creates an instance of CMSClient.
    * @param {ClientOptions} options - Options for configuring the client.
    * @param {string} options.baseURL - The base URL of the CMS.
@@ -41,6 +50,12 @@ export class CMSClient {
    *
    */
   constructor(options: ClientOptions) {
+    if (
+      this.endsWithSlash(options.baseURL) ||
+      this.endsWithSlash(options.apiPath)
+    ) {
+      throw new Error('baseURL and apiPath must not end with "/"');
+    }
     this.baseURL = options.baseURL;
     this.apiPath = options.apiPath;
     this.headers = options.headers;
