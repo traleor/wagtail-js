@@ -31,8 +31,7 @@ export type CMSContentPath =
 export interface CMSPageMeta {
   slug: string;
   type: string;
-  //   TODO
-  locale: "en" | "fr" | "de" | "es" | "it" | "ja" | "ko" | "pt" | string;
+  locale: string;
   html_url: string;
   detail_url: string;
   seo_title?: string;
@@ -50,7 +49,6 @@ export interface CMSContent {
   id: number;
   title: string;
   meta: CMSPageMeta | CMSMediaMeta;
-  [key: string]: any; // Index signature for additional fields
 }
 
 export interface CMSContents {

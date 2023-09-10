@@ -92,12 +92,12 @@ export class CMSClient {
     const contentType = "pages";
 
     if (typeof idOrSlug === "string") {
-      const response = await this.fetchContent(
+      const response = (await this.fetchContent(
         contentType,
         { slug: idOrSlug, ...queries },
         headers,
         cache
-      );
+      )) as CMSContents;
 
       if (response?.items && response.items.length > 0) {
         const page: CMSContent = response.items[0];
@@ -286,9 +286,9 @@ export class CMSClient {
    */
   public getMediaSrc(media: CMSMediaMeta): string | undefined {
     if (media.type === "wagtailimages.Image") {
-      return this.baseURL + new URL(media.detail_url).pathname;
-    } else if (media.type === "wagtaildocs.Document") {
       return this.baseURL + media.download_url;
+    } else if (media.type === "wagtaildocs.Document") {
+      return this.baseURL + new URL(media.detail_url).pathname;
     } else {
       return undefined;
     }
