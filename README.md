@@ -8,6 +8,7 @@ You can install the [wagtail-js](https://www.npmjs.com/package/wagtail-js) packa
 
 ```bash
 npm install wagtail-js
+bun install wagtail-js
 pnpm install wagtail-js
 yarn add wagtail-js
 ```
@@ -19,12 +20,7 @@ To use the `wagtail-js` package, you need to create an instance of the `CMSClien
 ### Import Statements
 
 ```typescript
-import {
-  CMSClient,
-  FetchError,
-  fetchContent,
-  fetchRequest,
-} from "wagtail-js";
+import { CMSClient, FetchError, fetchContent, fetchRequest } from "wagtail-js";
 import {
   ClientOptions,
   CMSContent,
@@ -144,3 +140,6 @@ The package provides various types and interfaces to help you work with CMS cont
 
 The `wagtail-js` package simplifies the process of fetching content from a Wagtail-based CMS using TypeScript. It provides a convenient `CMSClient` class with methods for fetching different types of content and handling response and error cases. Additionally, utility functions and types help you work with CMS content and requests effectively.
 
+## Resources
+
+- [Wagtail API v2 Usage Guide](https://docs.wagtail.org/en/stable/advanced_topics/api/v2/usage.html)

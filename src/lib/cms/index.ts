@@ -53,6 +53,20 @@ export const fetchContent = async (
 
   // build the query string if queries are provided
   // random ordering with offset is not supported
+  if (queries?.order && queries?.offset) {
+    throw new Error(
+      "Random ordering with offset is not supported. Please remove either the 'order' or 'offset' query."
+    );
+  }
+  // Filter by tree position is supported only for pages
+  if (
+    (queries?.child_of || queries?.ancestor_of || queries?.decendant_of) &&
+    content !== "pages"
+  ) {
+    throw new Error(
+      "Filtering by tree position is supported only for pages. Please remove the 'child_of', 'ancestor_of' or 'decendant_of'  query."
+    );
+  }
   const query = queries
     ? Object.keys(queries)
         .map((key) => {
