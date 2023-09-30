@@ -72,7 +72,7 @@ console.log("Documents:", documents);
 
 #### Fetching a Page
 
-You can fetch a single page based on its ID or slug:
+You can fetch a single page based on its ID (number) or slug (string):
 
 ```typescript
 const pageIdOrSlug = "home";

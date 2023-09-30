@@ -66,6 +66,7 @@ export type CMSQueries = {
   translation_of?: number;
   fields?: string[];
   show_in_menus?: boolean;
+  [key: string]: string | number | boolean | string[] | number[] | undefined;
 };
 
 export type CMSContentPath =

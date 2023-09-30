@@ -92,7 +92,7 @@ export class CMSClient {
    * Fetches a single page based on its ID or slug, handling response and error cases.
    *
    * @async
-   * @param {number | string} idOrSlug - The ID or slug of the page to fetch.
+   * @param {number | string} idOrSlug - The ID (number) or slug (string) of the page to fetch.
    * @param {CMSQueries} [queries] - Optional queries to filter the content.
    * @param {HeadersInit} [headers] - Additional headers to include in the request.
    * @param {RequestCache} [cache] - The caching strategy to use for the request.
