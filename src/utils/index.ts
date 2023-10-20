@@ -1,8 +1,5 @@
 import { CMSQueries } from "@/types";
 
-// isBrowser util function
-export const isBrowser = () => typeof window !== "undefined";
-
 export function buildQueryString(queries: CMSQueries | undefined): string {
   if (!queries) {
     return "";
