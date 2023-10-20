@@ -1,5 +1,6 @@
 import { CMSContent, CMSContentPath, CMSContents, CMSQueries } from "@/types";
 import { fetchRequest } from "@/lib";
+import { buildQueryString } from "@/utils";
 
 /**
  * Fetches CMS content using the provided parameters and handles response and error cases.
@@ -67,18 +68,7 @@ export const fetchContent = async (
       "Filtering by tree position is supported only for pages. Please remove the 'child_of', 'ancestor_of' or 'decendant_of'  query."
     );
   }
-  const query = queries
-    ? Object.keys(queries)
-        .map((key) => {
-          const rest = queries as any;
-          // if the value is an array, join the values with a comma
-          if (Array.isArray(rest[key])) {
-            return `${key}=${rest[key].join(",")}`;
-          }
-          return `${key}=${rest[key]}`;
-        })
-        .join("&")
-    : "";
+  const query = buildQueryString(queries);
 
   const fullUrl = `${baseURL}${apiPath}/${content}/?${query}`;
 
