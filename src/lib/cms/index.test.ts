@@ -23,10 +23,6 @@ describe("fetchContent", () => {
 
   const mockFetchRequest = require("../fetch").fetchRequest;
 
-  //   beforeEach(() => {
-
-  //   });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
