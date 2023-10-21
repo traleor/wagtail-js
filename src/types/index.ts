@@ -91,7 +91,7 @@ export interface CMSMediaMeta {
   type: string;
   detail_url: string;
   tags?: string[];
-  download_url?: string;
+  download_url: string;
 }
 
 export interface CMSContent {

@@ -298,12 +298,16 @@ export class CMSClient {
    * Contructs the URL for a media item based on its type.
    * @param {CMSMediaMeta} media - The media item to construct the URL for.
    * @returns {string | undefined} The URL for the media item.
+   * Images: the download_url property is a relative URL, so we need to prepend the baseURL.
+   * i.e this.baseURL + media.download_url
+   * Documents: the download_url property is an absolute URL, so we need to extract the pathname.
+   * i.e. this.baseURL + new URL(media.download_url).pathname
    */
   public getMediaSrc(media: CMSMediaMeta): string | undefined {
     if (media.type === "wagtailimages.Image") {
       return this.baseURL + media.download_url;
     } else if (media.type === "wagtaildocs.Document") {
-      return this.baseURL + new URL(media.detail_url).pathname;
+      return this.baseURL + new URL(media.download_url).pathname;
     } else {
       return undefined;
     }

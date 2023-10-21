@@ -7,7 +7,7 @@ import { fetchContent } from "@/lib";
 jest.mock("./lib/cms");
 
 describe("CMSClient", () => {
-  const baseURL = "https://api.example.com";
+  const baseURL = "https://demo.traleor.com";
   const apiPath = "/api/cms/v2";
   const headers = { Authorization: "Bearer token" };
   const cache = "no-store";
@@ -389,26 +389,26 @@ describe("CMSClient", () => {
   it("should construct the URL for a media item based on its type", () => {
     const imageMedia: CMSMediaMeta = {
       type: "wagtailimages.Image",
-      detail_url: "https://traleor.com/api/cms/v2/images/2/",
+      detail_url: "https://demo.traleor.com/api/cms/v2/images/2/",
       download_url: "/images/1/image.jpg",
     };
-    const documentMedia: CMSMediaMeta = {
+    const documentMedia = {
       type: "wagtaildocs.Document",
-      detail_url: "https://example.com/docs/1/",
+      detail_url: "https://demo.traleor.com/api/cms/v2/documents/2/",
+      download_url: "https://demo.traleor.com/docs/2/document.pdf",
     };
     const undefinedMedia: CMSMediaMeta = {
       type: "undefined",
       detail_url: "https://example.com/docs/1/",
+      download_url: "https://example.com/docs/1/document.pdf",
     };
 
     const imageSrc = client.getMediaSrc(imageMedia);
     const documentSrc = client.getMediaSrc(documentMedia);
     const undefinedSrc = client.getMediaSrc(undefinedMedia);
-    console.log("IMG", imageSrc);
-    console.log("DOC", documentSrc);
 
-    expect(imageSrc).toBe("https://api.example.com/images/1/image.jpg");
-    expect(documentSrc).toBe("https://api.example.com/docs/1/");
+    expect(imageSrc).toBe("https://demo.traleor.com/images/1/image.jpg");
+    expect(documentSrc).toBe("https://demo.traleor.com/docs/2/document.pdf");
     expect(undefinedSrc).toBe(undefined);
   });
 });

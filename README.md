@@ -100,6 +100,28 @@ const document = await client.fetchDocument(documentId);
 console.log("Document:", document);
 ```
 
+#### Retrieving Media Source URL
+
+The getMediaSrc method in the CMSClient class allows you to retrieve the source URL of a media item, such as an image or document, based on its type. This method is particularly useful when you need to display media content from your Wagtail-based CMS.
+
+```typescript
+const imageMedia: CMSMediaMeta = {
+  type: "wagtailimages.Image",
+  detail_url: "https://traleor.com/api/cms/v2/images/2/",
+  download_url: "/images/1/image.jpg",
+};
+const documentMedia: CMSMediaMeta = {
+  type: "wagtaildocs.Document",
+  detail_url: "https://example.com/docs/1/",
+};
+
+const imageURL = client.getMediaSrc(imageMeta);
+const documentURL = client.getMediaSrc(documentMeta);
+
+console.log("Image URL:", imageURL); // https://api.example.com/images/1/image.jpg
+console.log("Document URL:", documentURL); // https://example.com/media/documents/example.pdf
+```
+
 ### Utility Functions
 
 The `wagtail-js` package includes utility functions for fetching content and constructing URLs for media items.
