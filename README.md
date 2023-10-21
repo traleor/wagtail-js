@@ -107,19 +107,20 @@ The getMediaSrc method in the CMSClient class allows you to retrieve the source 
 ```typescript
 const imageMedia: CMSMediaMeta = {
   type: "wagtailimages.Image",
-  detail_url: "https://traleor.com/api/cms/v2/images/2/",
+  detail_url: "https://demo.traleor.com/api/cms/v2/images/2/",
   download_url: "/images/1/image.jpg",
 };
 const documentMedia: CMSMediaMeta = {
   type: "wagtaildocs.Document",
-  detail_url: "https://example.com/docs/1/",
+  detail_url: "https://demo.traleor.com/api/cms/v2/documents/2/",
+  download_url: "https://demo.traleor.com/docs/2/document.pdf",
 };
 
 const imageURL = client.getMediaSrc(imageMeta);
 const documentURL = client.getMediaSrc(documentMeta);
 
-console.log("Image URL:", imageURL); // https://api.example.com/images/1/image.jpg
-console.log("Document URL:", documentURL); // https://example.com/media/documents/example.pdf
+console.log("Image URL:", imageURL); // https://demo.traleor.com/images/1/image.jpg
+console.log("Document URL:", documentURL); // https://demo.traleor.com/docs/2/document.pdf
 ```
 
 ### Utility Functions
