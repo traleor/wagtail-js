@@ -1,6 +1,6 @@
 {
   "name": "wagtail-js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Wagtail JavaScript SDK",
   "author": "Peng Boris <peng@traleor.com>",
   "license": "MIT",
