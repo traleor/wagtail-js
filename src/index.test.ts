@@ -122,6 +122,34 @@ describe("CMSClient", () => {
     );
   });
 
+  it("should return Page not found", async () => {
+    // Mock the fetchContent function to return an empty response
+    mockFetchContent.mockResolvedValue({ items: [] });
+
+    const idOrSlug = "non-existent-page";
+    const response: any = await client.fetchPage(idOrSlug, queries);
+
+    expect(response.message).toBe("Page not found");
+    expect(response.data).toEqual({ items: [] });
+  });
+
+  it("should handle FetchError and return 'Page not found' with error data", async () => {
+    // Mock the fetchContent function to throw a FetchError
+    const fetchError = new FetchError("Request failed", "REQUEST_FAILED");
+    mockFetchContent.mockRejectedValue(fetchError);
+
+    const idOrSlug = 120;
+
+    try {
+      const response: any = await client.fetchPage(idOrSlug, queries);
+      expect(response.message).toBe("Page not found");
+      expect(response.data).toBe(fetchError);
+    } catch (error) {
+      // Ensure that this branch is not entered
+      fail("Error should not be thrown");
+    }
+  });
+
   it("should fetch a single image based on ID or slug", async () => {
     // Mock the fetchContent function to return a successful response
     const resp = {
@@ -247,6 +275,48 @@ describe("CMSClient", () => {
     );
   });
 
+  it("should handle unknown error occurred fetchPage, fetchImage and fetchDocument", async () => {
+    // Mock the fetchRequest function to return an error response
+    mockFetchContent.mockRejectedValue({
+      message: "An unknown error occurred:",
+    });
+
+    try {
+      await client.fetchPage(1, queries);
+      await client.fetchImage(1, queries);
+      await client.fetchDocument(1, queries);
+    } catch (error: any) {
+      expect(error).toBeInstanceOf(Error);
+      expect(error.message).toBe("An unknown error occurred:");
+    }
+
+    // Ensure that fetchContent was called with the correct arguments
+    expect(fetchContent).toHaveBeenCalledWith(
+      baseURL,
+      apiPath,
+      `pages/${1}`,
+      { ...queries },
+      { Authorization: "Bearer token" },
+      cache
+    );
+    expect(fetchContent).toHaveBeenCalledWith(
+      baseURL,
+      apiPath,
+      `images/${1}`,
+      { ...queries },
+      { Authorization: "Bearer token" },
+      cache
+    );
+    expect(fetchContent).toHaveBeenCalledWith(
+      baseURL,
+      apiPath,
+      `documents/${1}`,
+      { ...queries },
+      { Authorization: "Bearer token" },
+      cache
+    );
+  });
+
   it("should fetch all pages", async () => {
     // Mock the fetchContent function to return a successful response
     const resp = {
@@ -326,13 +396,19 @@ describe("CMSClient", () => {
       type: "wagtaildocs.Document",
       detail_url: "https://example.com/docs/1/",
     };
+    const undefinedMedia: CMSMediaMeta = {
+      type: "undefined",
+      detail_url: "https://example.com/docs/1/",
+    };
 
     const imageSrc = client.getMediaSrc(imageMedia);
     const documentSrc = client.getMediaSrc(documentMedia);
+    const undefinedSrc = client.getMediaSrc(undefinedMedia);
     console.log("IMG", imageSrc);
     console.log("DOC", documentSrc);
 
     expect(imageSrc).toBe("https://api.example.com/images/1/image.jpg");
     expect(documentSrc).toBe("https://api.example.com/docs/1/");
+    expect(undefinedSrc).toBe(undefined);
   });
 });
