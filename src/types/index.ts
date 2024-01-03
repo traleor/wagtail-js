@@ -2,6 +2,7 @@ import { FetchError } from "@/lib";
 
 export interface ClientOptions {
   baseURL: string;
+  mediaBaseURL?: string;
   apiPath: string;
   headers?: HeadersInit;
   cache?: RequestCache;

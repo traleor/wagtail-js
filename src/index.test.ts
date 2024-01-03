@@ -8,6 +8,7 @@ jest.mock("./lib/cms");
 
 describe("CMSClient", () => {
   const baseURL = "https://demo.traleor.com";
+  const mediaBaseURL = "https://cdn.traleor.com";
   const apiPath = "/api/cms/v2";
   const headers = { Authorization: "Bearer token" };
   const cache = "no-store";
@@ -17,7 +18,13 @@ describe("CMSClient", () => {
     limit: 10,
   };
 
-  const client = new CMSClient({ baseURL, apiPath, headers, cache });
+  const client = new CMSClient({
+    baseURL,
+    mediaBaseURL,
+    apiPath,
+    headers,
+    cache,
+  });
 
   const mockFetchContent = require("./lib/cms").fetchContent;
 
@@ -28,6 +35,7 @@ describe("CMSClient", () => {
   it("should construct a CMSClient instance with valid options", () => {
     const client = new CMSClient({
       baseURL,
+      mediaBaseURL,
       apiPath,
       headers,
       cache,
@@ -35,20 +43,22 @@ describe("CMSClient", () => {
 
     expect(client).toBeInstanceOf(CMSClient);
     expect(client["baseURL"]).toBe(baseURL);
+    expect(client["mediaBaseURL"]).toBe(mediaBaseURL);
     expect(client["apiPath"]).toBe(apiPath);
     expect(client["headers"]).toEqual(headers);
     expect(client["cache"]).toBe(cache);
   });
 
-  it("should throw an error when baseURL or apiPath ends with '/'", () => {
+  it("should throw an error when baseURL, mediaBaseURL or apiPath ends with '/'", () => {
     expect(() => {
       new CMSClient({
         baseURL: "https://example.com/",
+        mediaBaseURL: "https://cdn.example.com/",
         apiPath: "/api/v2/",
         headers,
         cache,
       });
-    }).toThrowError('baseURL and apiPath must not end with "/"');
+    }).toThrowError('baseURL, mediaBaseURL or apiPath must not end with "/"');
   });
 
   it("should fetch CMS content", async () => {
@@ -407,8 +417,8 @@ describe("CMSClient", () => {
     const documentSrc = client.getMediaSrc(documentMedia);
     const undefinedSrc = client.getMediaSrc(undefinedMedia);
 
-    expect(imageSrc).toBe("https://demo.traleor.com/images/1/image.jpg");
-    expect(documentSrc).toBe("https://demo.traleor.com/docs/2/document.pdf");
+    expect(imageSrc).toBe("https://cdn.traleor.com/images/1/image.jpg");
+    expect(documentSrc).toBe("https://cdn.traleor.com/docs/2/document.pdf");
     expect(undefinedSrc).toBe(undefined);
   });
 });

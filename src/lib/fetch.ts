@@ -57,7 +57,10 @@ export const fetchRequest = async (
     });
 
     if (!response.ok) {
-      throw new FetchError("Request failed", "REQUEST_FAILED");
+      throw new FetchError(
+        `Request failed with response: ${JSON.stringify(response, null, 2)}`,
+        "REQUEST_FAILED"
+      );
     }
 
     return await response.json();

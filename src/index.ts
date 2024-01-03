@@ -19,6 +19,7 @@ import {
  */
 export class CMSClient {
   private baseURL: string;
+  private mediaBaseURL?: string;
   private apiPath: string;
   private headers?: HeadersInit;
   private cache: RequestCache;
@@ -36,6 +37,7 @@ export class CMSClient {
    * Creates an instance of CMSClient.
    * @param {ClientOptions} options - Options for configuring the client.
    * @param {string} options.baseURL - The base URL of the CMS.
+   * @param {string} options.mediaBaseURL - The base URL of the CMS media (e.g., images, documents) for constructing media URLs.
    * @param {string} options.apiPath - The path to the CMS API.
    * @param {HeadersInit} [options.headers] - Additional headers to include in the request.
    * @param {RequestCache} [options.cache] - The caching strategy to use for the request.
@@ -52,11 +54,13 @@ export class CMSClient {
   constructor(options: ClientOptions) {
     if (
       this.endsWithSlash(options.baseURL) ||
-      this.endsWithSlash(options.apiPath)
+      this.endsWithSlash(options.apiPath) ||
+      (options.mediaBaseURL && this.endsWithSlash(options.mediaBaseURL))
     ) {
-      throw new Error('baseURL and apiPath must not end with "/"');
+      throw new Error('baseURL, mediaBaseURL or apiPath must not end with "/"');
     }
     this.baseURL = options.baseURL;
+    this.mediaBaseURL = options.mediaBaseURL;
     this.apiPath = options.apiPath;
     this.headers = options.headers;
     this.cache = options.cache || "force-cache";
@@ -305,8 +309,14 @@ export class CMSClient {
    */
   public getMediaSrc(media: CMSMediaMeta): string | undefined {
     if (media.type === "wagtailimages.Image") {
+      if (this.mediaBaseURL) {
+        return this.mediaBaseURL + media.download_url;
+      }
       return this.baseURL + media.download_url;
     } else if (media.type === "wagtaildocs.Document") {
+      if (this.mediaBaseURL) {
+        return this.mediaBaseURL + new URL(media.download_url).pathname;
+      }
       return this.baseURL + new URL(media.download_url).pathname;
     } else {
       return undefined;
