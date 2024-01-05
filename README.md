@@ -40,6 +40,7 @@ To fetch content from the CMS, you need to create an instance of the `CMSClient`
 const client = new CMSClient({
   baseURL: "https://example.com",
   apiPath: "/api/v2",
+  mediaBaseURL: "https://cdn.example.com", // Optional media base URL, falls back to baseURL
   headers: {}, // Optional additional headers
   cache: "force-cache", // Optional caching strategy
 });
@@ -119,8 +120,8 @@ const documentMedia: CMSMediaMeta = {
 const imageURL = client.getMediaSrc(imageMeta);
 const documentURL = client.getMediaSrc(documentMeta);
 
-console.log("Image URL:", imageURL); // https://demo.traleor.com/images/1/image.jpg
-console.log("Document URL:", documentURL); // https://demo.traleor.com/docs/2/document.pdf
+console.log("Image URL:", imageURL); // https://cdn.traleor.com/images/1/image.jpg
+console.log("Document URL:", documentURL); // https://cdn.traleor.com/docs/2/document.pdf
 ```
 
 ### Utility Functions

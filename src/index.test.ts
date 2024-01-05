@@ -407,18 +407,11 @@ describe("CMSClient", () => {
       detail_url: "https://demo.traleor.com/api/cms/v2/documents/2/",
       download_url: "https://demo.traleor.com/docs/2/document.pdf",
     };
-    const undefinedMedia: CMSMediaMeta = {
-      type: "undefined",
-      detail_url: "https://example.com/docs/1/",
-      download_url: "https://example.com/docs/1/document.pdf",
-    };
 
     const imageSrc = client.getMediaSrc(imageMedia);
     const documentSrc = client.getMediaSrc(documentMedia);
-    const undefinedSrc = client.getMediaSrc(undefinedMedia);
 
     expect(imageSrc).toBe("https://cdn.traleor.com/images/1/image.jpg");
     expect(documentSrc).toBe("https://cdn.traleor.com/docs/2/document.pdf");
-    expect(undefinedSrc).toBe(undefined);
   });
 });

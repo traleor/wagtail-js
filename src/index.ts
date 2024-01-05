@@ -305,21 +305,21 @@ export class CMSClient {
    * i.e this.baseURL + media.download_url
    * Documents: the download_url property is an absolute URL, so we need to extract the pathname.
    * i.e. this.baseURL + new URL(media.download_url).pathname
-   * @returns {string | undefined} The URL for the media item.
+   * @returns {string} The URL for the media item.
    */
-  public getMediaSrc(media: CMSMediaMeta): string | undefined {
-    if (media.type === "wagtailimages.Image") {
-      if (this.mediaBaseURL) {
-        return this.mediaBaseURL + media.download_url;
-      }
-      return this.baseURL + media.download_url;
-    } else if (media.type === "wagtaildocs.Document") {
-      if (this.mediaBaseURL) {
-        return this.mediaBaseURL + new URL(media.download_url).pathname;
-      }
-      return this.baseURL + new URL(media.download_url).pathname;
+  public getMediaSrc(media: CMSMediaMeta): string {
+    const baseUrl = this.mediaBaseURL || this.baseURL;
+    // Regular expression to match HTTP URLs
+    const httpUrlPattern = /^(https?):\/\/[^\s/$.?#].[^\s]*$/i;
+
+    // Check if download_url matches the HTTP URL pattern
+    if (httpUrlPattern.test(media.download_url)) {
+      // If it's a valid HTTP URL, use it
+      return `${baseUrl}${new URL(media.download_url).pathname}`;
     } else {
-      return undefined;
+      // If it doesn't look like an HTTP URL, use it as is
+      console.warn("Invalid HTTP URL:", media.download_url);
+      return baseUrl + media.download_url;
     }
   }
 }
