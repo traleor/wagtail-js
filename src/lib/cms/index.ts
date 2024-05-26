@@ -54,7 +54,7 @@ export const fetchContent = async (
 
   // build the query string if queries are provided
   // random ordering with offset is not supported
-  if (queries?.order && queries?.offset) {
+  if (queries?.order && queries?.order === "random" && queries?.offset) {
     throw new Error(
       "Random ordering with offset is not supported. Please remove either the 'order' or 'offset' query."
     );

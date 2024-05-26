@@ -86,6 +86,7 @@ export interface CMSPageMeta {
   detail_url: string;
   seo_title?: string;
   search_description?: string;
+  first_published_at?: string;
 }
 
 export interface CMSMediaMeta {

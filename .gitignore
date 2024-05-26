@@ -30,5 +30,6 @@ yarn-error.log*
 
 # custom
 note*.txt
+bun.lockb
 package-lock.json
 pnpm-lock.yaml
