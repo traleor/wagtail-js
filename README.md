@@ -167,3 +167,4 @@ The `wagtail-js` package simplifies the process of fetching content from a Wagta
 ## Resources
 
 - [Wagtail API v2 Usage Guide](https://docs.wagtail.org/en/stable/advanced_topics/api/v2/usage.html)
+- [Integrating Next.js and Wagtail: Building a Headless, Content-Driven Website](https://blog.traleor.com/headless-nextjs-wagtail)
